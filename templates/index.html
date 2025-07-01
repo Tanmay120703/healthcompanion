@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <title>Welcome | Your Health Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8fbfd;
+    color: #333;
+  }
+
+  .hero {
+    background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 50px 30px;
+  }
+
+  .card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card h2 {
+    color: #1f2e49;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+  }
+
+  .cta {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .cta:hover {
+    background-color: #2563eb;
+  }
+
+  .health-benefits {
+    background-color: #ffffff;
+    padding: 60px 30px;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .health-benefits h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #1f2e49;
+    margin-bottom: 40px;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .benefit-card {
+    background-color: #f0f9ff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .benefit-card p {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .benefit-card span {
+    font-size: 1.3rem;
+    margin-right: 10px;
+  }
+
+  footer {
+    background-color: #1f2e49;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    background-color: #000;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .faq-section-title {
+    font-size: 1.3rem;
+    color: #1f2e49;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  .faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-item {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .faq-item:hover {
+    background: #f0f0f0;
+  }
+
+  .faq-question {
+    color: #5c6ac4;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-answer {
+    display: none;
+    margin-top: 12px;
+    color: #333;
+    font-weight: normal;
+    line-height: 1.5;
+  }
+
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+
+  .plus-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s;
+  }
+
+
+  .section-title {
+    font-size: 2.2rem;
+    color: #1f2e49;
+    margin-bottom: 10px;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 40px;
+  }
+
+  .plans-wrapper {
+    padding: 60px 30px;
+    background: #f8fbfd;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .plans-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .plan-card {
+    background-color: #ffffff;
+    border-radius: 18px;
+    padding: 30px 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    width: 320px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    text-align: center;
+  }
+
+  .plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .plan-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #1f2e49;
+  }
+
+  .plan-card .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-bottom: 20px;
+  }
+
+  .plan-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+    text-align: left;
+  }
+
+  .plan-card ul li {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    padding-left: 1.4em;
+    position: relative;
+  }
+
+  .plan-card ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .plan-card ul li.included::before {
+    color: #3b82f6;
+  }
+
+  .plan-card ul li.not-included::before {
+    color: #e53935;
+  }
+
+  .enroll-button {
+    display: inline-block;
+    background-color: #1f2e49;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
+  }
+
+  .enroll-button:hover {
+    background-color: #3b82f6;
+  }
+
+  .plan-card .tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff9800;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+</head>
+<body>
+
+<section class="hero">
+  <h1>Welcome to Your Health Companion</h1>
+  <p>Start your journey towards a healthier, stronger you. Whether you're looking to lose weight, gain muscle, or simply stay fit — we’ve got your back with expert plans and guidance.</p>
+  <a href="/form" class="cta">Get Started</a>
+</section>
+
+<section class="services">
+  <div class="card">
+    <h2>🏋️ Weight Loss</h2>
+    <p>Science-backed tips and Indian diet recipes to help you shed fat the healthy way.</p>
+  </div>
+  <div class="card">
+    <h2>💪 Muscle Gain</h2>
+    <p>High-protein meals and personalized training strategies to help you bulk up.</p>
+  </div>
+  <div class="card">
+    <h2>🍚 Weight Gain</h2>
+    <p>Wholesome Indian meals and tailored workouts for safe and effective weight gain.</p>
+  </div>
+  <div class="card">
+    <h2>🎯 Personalized Plans</h2>
+    <p>Choose from BASIC or PREMIUM training packages with features like 1-1 calls, check-ins, and customized routines.</p>
+  </div>
+  <div class="card">
+    <h2>🤖 AI-Powered Chatbot</h2>
+    <p>Ask anything about diets, workouts, or nutrition. Get instant support 24/7.</p>
+  </div>
+</section>
+
+<section class="health-benefits">
+  <h2>Why Taking Care of Your Health Matters</h2>
+  <div class="benefits-grid">
+    <div class="benefit-card"><p><span>✅</span><strong>Prevention is better than cure:</strong> Helps avoid diseases like diabetes, heart issues, and obesity.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Supports mental health:</strong> Boosts mood, reduces anxiety, and improves mental clarity.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>More energy & focus:</strong> Stay productive and mentally sharp throughout the day.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Improves confidence:</strong> A healthy body enhances self-esteem and presence.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Lower healthcare costs:</strong> Fewer doctor visits and medications save money long term.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Better sleep:</strong> Consistent health routines improve rest and recovery.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Live longer, stronger:</strong> Add quality years to your life with strength and independence.</p></div>
+    <div class="benefit-card"><p><span>✅</span><strong>Inspire others:</strong> Set an example for your friends, family, and community.</p></div>
+  </div>
+</section>
+
+<section class="plans-wrapper">
+  <h2 class="section-title">The right plan for your health</h2>
+  <p class="section-subtitle">Choose the perfect plan for your fitness needs. Flexible and easy to follow.</p>
+
+  <div class="plans-container">
+    <!-- BASIC PLAN -->
+    <div class="plan-card basic">
+      <h3>BASIC (3 MONTHS)</h3>
+      <p class="price">Rs. 6,990</p>
+      <ul>
+        <li class="included">✔️ Customised Diet</li>
+        <li class="included">✔️ Customised Workout</li>
+        <li class="included">✔️ Weekly Check-Ins</li>
+        <li class="included">✔️ 1-1 Phone Call Support (Once in 15 Days)</li>
+        <li class="included">✔️ WhatsApp Support (Limited)</li>
+        <li class="included">✔️ Supplement Guidance</li>
+        <li class="not-included">❌ Workout Posture Correction</li>
+        <li class="not-included">❌ Meal Tracking & Feedback</li>
+        <li class="not-included">❌ 1-1 Video Call With Coach</li>
+      </ul>
+      <a href="/enroll?plan=basic" class="enroll-button">ENROLL NOW</a>
+    </div>
+
+    <!-- PREMIUM PLAN -->
+    <div class="plan-card premium">
+      <div class="tag">Most Popular</div>
+      <h3>PREMIUM (3 MONTHS)</h3>
+      <p class="price">Rs. 9,990</p>
+      <ul>
+        <li class="included">✔️ Customised Diet</li>
+        <li class="included">✔️ Customised Workout</li>
+        <li class="included">✔️ Weekly Check-Ins</li>
+        <li class="included">✔️ 1-1 Phone Call Support</li>
+        <li class="included">✔️ WhatsApp Support</li>
+        <li class="included">✔️ Supplement Guidance</li>
+        <li class="included">✔️ Workout Posture Correction</li>
+        <li class="included">✔️ Meal Tracking & Feedback</li>
+        <li class="not-included">❌ 1-1 Video Call With Coach</li>
+      </ul>
+      <a href="/enroll?plan=premium" class="enroll-button">ENROLL NOW</a>
+    </div>
+  </div>
+</section>
+
+<section class="health-benefits">
+  <h2>FAQs</h2>
+  <div class="faq-container">
+
+    <div class="faq-section-title">💪 Fitness & Exercise</div>
+
+    <div class="faq-item">
+      <div class="faq-question">How often should I exercise?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Aim for at least 150 minutes of moderate-intensity exercise per week (e.g., 30 minutes, 5 days a week).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What’s better: cardio or strength training?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Both are important. Cardio supports heart health, while strength training builds muscle and metabolism.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Can I work out every day?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Yes, but include rest or active recovery days to prevent burnout and injury.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How long does it take to see results?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 You may start noticing changes in 4–6 weeks, but visible results can take 8–12 weeks, depending on consistency and diet.</div>
+    </div>
+
+    <div class="faq-section-title">🥗 Diet & Nutrition</div>
+
+    <div class="faq-item">
+      <div class="faq-question">What’s the best diet for weight loss or muscle gain?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 There is no one-size-fits-all. Focus on balanced meals with the right calories, protein, carbs, and fats for your goal.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Is it necessary to avoid carbs?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 No. Healthy carbs like fruits, veggies, and whole grains are essential for energy and recovery.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How much protein do I need?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Around 1.6–2.2g of protein per kg of body weight if you’re active or trying to gain muscle.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Are supplements necessary?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Not always. They support but don’t replace a good diet. Use them if there’s a gap (like whey for protein or vitamins if deficient).</div>
+    </div>
+
+    <div class="faq-section-title">🧘 Health & Lifestyle</div>
+
+    <div class="faq-item">
+      <div class="faq-question">How important is sleep for fitness?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Very. Aim for 7–9 hours per night. Poor sleep affects hormones, recovery, and fat loss.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Can stress affect my fitness progress?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Yes. High stress can increase fat storage, reduce motivation, and affect digestion and sleep.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How do I stay consistent?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 Set realistic goals, track your progress, and build a routine that fits your lifestyle.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What is a healthy body fat percentage?<span class="plus-icon">+</span></div>
+      <div class="faq-answer">👉 For men: 10–20%, for women: 18–28% is generally considered healthy.</div>
+    </div>
+
+  </div>
+</section>
+<script>
+  const items = document.querySelectorAll('.faq-item');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+</script>
+
+<footer>
+  <p>&copy; 2025 Your Health Companion | All Rights Reserved</p>
+</footer>
+
+{% endblock content %}

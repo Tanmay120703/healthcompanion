@@ -1,0 +1,38 @@
+[
+    {
+        "name": "tanmay",
+        "city": "mumbai",
+        "age": 21,
+        "gender": "Male",
+        "height": 180.0,
+        "weight": 72.0,
+        "bmi": 22.22,
+        "verdict": "Normal weight",
+        "goal": "Gain muscle",
+        "advice": "Consume around 15-20% more calories than your maintenance level."
+    },
+    {
+        "name": "tanmay",
+        "city": "mumbai",
+        "age": 21,
+        "gender": "Male",
+        "height": 180.0,
+        "weight": 72.0,
+        "bmi": 22.22,
+        "verdict": "Normal weight",
+        "goal": "Gain muscle",
+        "advice": "Consume around 15-20% more calories than your maintenance level."
+    },
+    {
+        "name": "tanmay",
+        "city": "mumbai",
+        "age": 21,
+        "gender": "Male",
+        "height": 180.0,
+        "weight": 72.0,
+        "bmi": 22.22,
+        "verdict": "Normal weight",
+        "goal": "Gain muscle",
+        "advice": "Consume around 15-20% more calories than your maintenance level."
+    }
+]

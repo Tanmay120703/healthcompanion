@@ -1,0 +1,484 @@
+{% extends "base.html" %}
+{% block title %}Weight Loss{% endblock %}
+
+{% block content %}
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: block; /* Changed from flex to block */
+    }
+
+    .main {
+      width: 100%;       /* Full width now */
+      padding: 30px;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .recipe, .intro {
+      background: #ffffff;
+      padding: 25px;
+      margin-bottom: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .image-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+    .plan-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .plan {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .plan h3 {
+      color: #6a6cff;
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    .plan ul li {
+      padding: 6px 0;
+      font-size: 0.95em;
+    }
+
+    .enroll {
+      background-color: #6a6cff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .premium {
+      border: 2px solid #6a6cff;
+    }
+
+    .tag {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 0.75em;
+      font-weight: bold;
+      border-radius: 0 12px 0 12px;
+    }
+      .plans-wrapper {
+        padding: 60px 30px;
+        background: #f8fbfd;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .plans-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .plan-card {
+        background-color: #ffffff;
+        border-radius: 18px;
+        padding: 30px 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        width: 320px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        text-align: center;
+      }
+
+      .plan-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .plan-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #1f2e49;
+      }
+
+      .plan-card .price {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+      }
+
+      .plan-card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .plan-card ul li {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        padding-left: 1.4em;
+        position: relative;
+      }
+
+      .plan-card ul li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .plan-card ul li.included::before {
+        color: #3b82f6;
+      }
+
+      .plan-card ul li.not-included::before {
+        color: #e53935;
+      }
+
+      .enroll-button {
+        display: inline-block;
+        background-color: #1f2e49;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+      }
+
+      .enroll-button:hover {
+        background-color: #3b82f6;
+      }
+
+      .plan-card .tag {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ff9800;
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+  </style>
+
+  <div class="container">
+    <div class="main">
+      <div class="intro">
+        <h1>🍛 Tips and studies for Muscle Gain</h1>
+        <hr>
+        <h2>What It Is</h2>
+        <p>A muscle gain diet emphasizes building lean muscle through strength training and a calorie surplus with high-protein, nutrient-dense foods.</p>
+        <hr>
+        <h2>Macronutrients and Their Role in Muscle Gain</h2>
+        <ul>
+          <li><strong>Calories</strong>: To build muscle, consume more calories than you burn (caloric surplus). These excess calories provide the energy needed for muscle synthesis.</li>
+          <li><strong>Proteins</strong>: Crucial for muscle repair and growth. Aim for 1.6–2.2g protein per kg body weight.</li>
+          <li><strong>Fats</strong>: Support hormone production, including testosterone. Include healthy fats like nuts, ghee, and seeds.</li>
+          <li><strong>Carbohydrates</strong>: Fuel workouts and aid in muscle recovery. Opt for complex carbs like sweet potatoes and brown rice.</li>
+        </ul>
+
+        <hr>
+        <h2>🔍🔬 Top Science-Backed Summaries</h2>
+        <div class="recipe">
+        
+        <h2>1. Progressive Overload Stimulates Muscle Growth</h2>
+        <div class="image-wrapper">
+          <img src="https://www.nevermindthebuspass.co.uk/wp-content/uploads/2024/05/Progressive-overload-660x400.png" alt="Progressive Overload">
+        </div>
+        <p><strong>Summary:</strong> Repeatedly increasing the weight or reps during resistance training forces muscle fibers to adapt. Studies show hypertrophy is maximized by gradually increasing training intensity over time, ideally within 6–12 rep ranges per set at ~70–85% of 1RM.</p>
+        <ul>
+          <li>🏋️ Add weight or reps weekly for continued gains.</li>
+          <li>🔁 3–5 sets of 6–12 reps at 70–85% of 1RM is optimal.</li>
+          <li>🧪 Research confirms greater hypertrophy with overload over time.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.ncbi.nlm.nih.gov" target="_blank">ncbi.nlm.nih.gov</a>,
+          <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank">pubmed.ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>2. Protein Timing Enhances Muscle Protein Synthesis</h2>
+        <div class="image-wrapper">
+          <img src="https://www.nutritiontactics.com/wp-content/uploads/2016/08/Muscle-full-effect.jpg" alt="Protein Timing">
+        </div>
+        <p><strong>Summary:</strong> Consuming high-quality protein (20–40g) within a 2-hour window post-workout maximizes muscle protein synthesis. Leucine-rich sources (e.g., whey, eggs) are particularly effective. Spreading intake across 3–5 meals boosts daily net protein balance.</p>
+        <ul>
+          <li>🥚 20–40g of complete protein within 2 hours of lifting.</li>
+          <li>💪 Include leucine-rich foods like whey or eggs.</li>
+          <li>🕒 Spread protein across 3–5 meals daily.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5828430" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>3. Sleep & Muscle Recovery Are Deeply Connected</h2>
+        <div class="image-wrapper">
+          <img src="https://gym-pin.co.uk/cdn/shop/articles/the-role-of-sleep_242b7d1a-85f9-4d3d-92bd-3ec6eabf841c.jpg?v=1720519097" alt="Sleep and Recovery">
+        </div>
+        <p><strong>Summary:</strong> Athletes getting <strong>&lt;6 hours of sleep</strong> show reduced testosterone, slower muscle repair, and increased cortisol. Deep sleep cycles are critical for growth hormone release, tissue regeneration, and recovery from intense workouts.</p>
+        <ul>
+          <li>🛌 Aim for 7–9 hours of sleep nightly.</li>
+          <li>📉 Poor sleep raises cortisol & slows gains.</li>
+          <li>💤 Growth hormone peaks during deep sleep.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.sleepfoundation.org" target="_blank">sleepfoundation.org</a>,
+          <a href="https://www.ncbi.nlm.nih.gov" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>4. Creatine Monohydrate Increases Strength and Size</h2>
+        <div class="image-wrapper">
+          <img src="https://i.pinimg.com/736x/b8/46/38/b84638eb330f9d4601d998e317ce7588.jpg" alt="Creatine Supplement">
+        </div>
+        <p><strong>Summary:</strong> Creatine is one of the most researched and effective muscle-building supplements. It enhances phosphocreatine stores in muscles, allowing for more ATP during short bursts of intense exercise. Regular use improves strength, lean mass, and anaerobic capacity.</p>
+        <ul>
+          <li>💊 Take 3–5g daily of creatine monohydrate.</li>
+          <li>⚡ Boosts explosive power & short-term performance.</li>
+          <li>📈 Leads to measurable muscle thickness and strength gains.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://examine.com/supplements/creatine" target="_blank">examine.com</a>,
+          <a href="https://www.ncbi.nlm.nih.gov" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>5. Training Volume & Frequency Dictate Gains</h2>
+        <div class="image-wrapper">
+          <img src="https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2022/03/Optimal-training-volume-1024x650-1.jpg?resize=700%2C444&ssl=1" alt="Training Volume">
+        </div>
+        <p><strong>Summary:</strong> Meta-analyses show that performing more sets per muscle group per week (10–20) results in greater hypertrophy. Training each muscle 2x per week is more effective than once. Volume is the key driver of growth when technique and recovery are adequate.</p>
+        <ul>
+          <li>📅 Train each muscle group 2x per week.</li>
+          <li>💪 10–20 working sets per muscle weekly for best results.</li>
+          <li>⚠️ Avoid overtraining—recovery is essential.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.frontiersin.org" target="_blank">frontiersin.org</a>,
+          <a href="https://www.ncbi.nlm.nih.gov" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+      <h2>💪 Evidence from Clinical Reviews & Meta-Analyses</h2>
+
+      <p><strong>High-Protein Intake Enhances Hypertrophy:</strong> Meta-analyses show consuming 1.6–2.2 g protein per kg body weight daily significantly boosts muscle mass when combined with resistance training.</p>
+      <p><a href="https://pubmed.ncbi.nlm.nih.gov/28698222/" target="_blank">pubmed.ncbi.nlm.nih.gov</a></p>
+      <hr />
+
+      <p><strong>Progressive Resistance Training Drives Growth:</strong> Systematic reviews conclude that progressive overload—gradually increasing weight or reps—is the most consistent driver of muscle hypertrophy in both beginners and trained individuals.</p>
+      <p><a href="https://journals.lww.com/nsca-jscr" target="_blank">journals.lww.com/nsca-jscr</a></p>
+      <hr />
+
+      <p><strong>Recovery & Sleep Optimize Gains:</strong> Clinical findings confirm that 7–9 hours of nightly sleep and proper recovery between sessions are essential for maximizing muscle protein synthesis and hormonal support (like testosterone and GH).</p>
+      <p><a href="https://academic.oup.com/edrv" target="_blank">academic.oup.com/edrv</a></p>
+    </div>
+
+        <h2>Foods to Eat</h2>
+        <p>Focus on whole, protein-rich foods along with calorie-dense sources to support muscle gain.</p>
+
+        <table>
+          <tr>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Carbs</th>
+          </tr>
+          <tr><td>Paneer (100g)</td><td>296 kcal</td><td>18g</td><td>22g</td><td>3.4g</td></tr>
+          <tr><td>Whole Eggs</td><td>143 kcal</td><td>13g</td><td>10g</td><td>1g</td></tr>
+          <tr><td>Peanut Butter (2 tbsp)</td><td>188 kcal</td><td>8g</td><td>16g</td><td>6g</td></tr>
+          <tr><td>Brown Rice</td><td>111 kcal</td><td>2.6g</td><td>0.9g</td><td>23g</td></tr>
+          <tr><td>Chickpeas (100g cooked)</td><td>164 kcal</td><td>9g</td><td>3g</td><td>27g</td></tr>
+          <tr><td>Banana</td><td>105 kcal</td><td>1.3g</td><td>0.4g</td><td>27g</td></tr>
+          <tr><td>Ghee (1 tbsp)</td><td>112 kcal</td><td>0g</td><td>12.7g</td><td>0g</td></tr>
+          <tr><td>Milk (1 glass)</td><td>150 kcal</td><td>8g</td><td>8g</td><td>12g</td></tr>
+          <tr><td>Sweet Potato</td><td>86 kcal</td><td>1.6g</td><td>0.1g</td><td>20g</td></tr>
+        </table>
+
+        <hr>
+
+        <h2>Foods to Avoid</h2>
+        <ul>
+          <li>Refined sugar</li>
+          <li>Packaged protein bars with additives</li>
+          <li>Excess deep-fried snacks</li>
+          <li>Skipping meals</li>
+        </ul>
+
+        <hr>
+
+        <h2>Sample Menu (1 Day)</h2>
+        <ul>
+          <li><strong>Breakfast:</strong> 4 boiled eggs + 2 whole wheat parathas with ghee + banana smoothie</li>
+          <li><strong>Snack:</strong> Peanut butter on multigrain toast + almonds</li>
+          <li><strong>Lunch:</strong> Brown rice + chana curry + paneer sabzi + salad</li>
+          <li><strong>Evening Snack:</strong> Boiled sweet potato + protein shake</li>
+          <li><strong>Dinner:</strong> Tofu or paneer bhurji + whole wheat roti + mixed vegetables</li>
+          <li><strong>Bedtime:</strong> Glass of warm milk with turmeric</li>
+        </ul>
+
+        <hr>
+
+        <h2>Healthy Snacks</h2>
+        <ul>
+          <li>Boiled eggs</li>
+          <li>Mixed nuts and seeds</li>
+          <li>Paneer cubes</li>
+          <li>Banana with peanut butter</li>
+          <li>Roasted chana</li>
+        </ul>
+
+        <hr>
+
+        <h2>Muscle Gain Tips</h2>
+        <ul>
+          <li>Train with resistance 4–6 times per week</li>
+          <li>Eat every 3–4 hours</li>
+          <li>Prioritize protein in every meal</li>
+          <li>Stay hydrated</li>
+          <li>Sleep 7–9 hours for recovery</li>
+        </ul>
+
+        <hr>
+
+        <h2>Shopping List</h2>
+        <ul>
+          <li>Proteins: Paneer, eggs, milk, tofu, chickpeas</li>
+          <li>Carbs: Brown rice, sweet potato, whole wheat</li>
+          <li>Fats: Ghee, peanut butter, almonds</li>
+          <li>Fruits & Veggies: Banana, sweet potato, spinach</li>
+          <li>Supplements: Whey protein (optional)</li>
+        </ul>
+
+        <hr>
+
+        <h2>Bottom Line</h2>
+        <p>To gain muscle, follow a calorie-surplus diet rich in protein, complex carbs, and healthy fats. Pair it with strength training and sufficient rest to achieve lean muscle growth.</p>
+      </div>
+
+    </div>
+      <section class="plans-wrapper">
+    <h2 class="section-title">The right plan for your health</h2>
+    <p class="section-subtitle">Choose the perfect plan for your fitness needs. Flexible and easy to follow.</p>
+
+    <div class="plans-container">
+      <!-- BASIC PLAN -->
+      <div class="plan-card basic">
+        <h3>BASIC (3 MONTHS)</h3>
+        <p class="price">Rs. 6,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support (Once in 15 Days)</li>
+          <li class="included">✔️ WhatsApp Support (Limited)</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="not-included">❌ Workout Posture Correction</li>
+          <li class="not-included">❌ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=basic" class="enroll-button">ENROLL NOW</a>
+      </div>
+
+      <!-- PREMIUM PLAN -->
+      <div class="plan-card premium">
+        <div class="tag">Most Popular</div>
+        <h3>PREMIUM (3 MONTHS)</h3>
+        <p class="price">Rs. 9,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support</li>
+          <li class="included">✔️ WhatsApp Support</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="included">✔️ Workout Posture Correction</li>
+          <li class="included">✔️ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=premium" class="enroll-button">ENROLL NOW</a>
+      </div>
+    </div>
+  </section>
+    </div>
+  </div>
+{% endblock %}

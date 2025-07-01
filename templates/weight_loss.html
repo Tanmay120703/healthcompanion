@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+{% block title %}Weight Loss{% endblock %}
+
+{% block content %}
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: block; /* Changed from flex to block */
+    }
+
+    .main {
+      width: 100%;       /* Full width now */
+      padding: 30px;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .recipe, .intro {
+      background: #ffffff;
+      padding: 25px;
+      margin-bottom: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .image-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+    .plan-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .plan {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .plan h3 {
+      color: #6a6cff;
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    .plan ul li {
+      padding: 6px 0;
+      font-size: 0.95em;
+    }
+
+    .enroll {
+      background-color: #6a6cff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .premium {
+      border: 2px solid #6a6cff;
+    }
+
+    .tag {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 0.75em;
+      font-weight: bold;
+      border-radius: 0 12px 0 12px;
+    }
+      .plans-wrapper {
+        padding: 60px 30px;
+        background: #f8fbfd;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .plans-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .plan-card {
+        background-color: #ffffff;
+        border-radius: 18px;
+        padding: 30px 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        width: 320px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        text-align: center;
+      }
+
+      .plan-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .plan-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #1f2e49;
+      }
+
+      .plan-card .price {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+      }
+
+      .plan-card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .plan-card ul li {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        padding-left: 1.4em;
+        position: relative;
+      }
+
+      .plan-card ul li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .plan-card ul li.included::before {
+        color: #3b82f6;
+      }
+
+      .plan-card ul li.not-included::before {
+        color: #e53935;
+      }
+
+      .enroll-button {
+        display: inline-block;
+        background-color: #1f2e49;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+      }
+
+      .enroll-button:hover {
+        background-color: #3b82f6;
+      }
+
+      .plan-card .tag {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ff9800;
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+  </style>
+
+  <div class="container">
+    <div class="main">
+      <div class="intro">
+        <h1>🍛 Tips and studies for weight loss </h1>
+        <hr>
+        <h2>What It Is</h2>
+        <p>A fat loss diet focuses on creating a <strong>calorie deficit</strong> to reduce body fat while preserving muscle mass...</p>
+        <hr>
+        <h2>Macronutrients and Their Role in Weight Gain</h2>
+        <ul>
+<li><strong>Calories</strong>: A mild deficit (400–600 kcal/day) promotes safe and sustainable fat loss.</li>
+          <li><strong>Proteins</strong>: Help preserve muscle mass and keep you full longer. Aim for 1.6–2g protein per kg of body weight.</li>
+          <li><strong>Fats</strong>: Essential in small amounts for hormone production and absorption of fat-soluble vitamins.</li>
+          <li><strong>Carbohydrates</strong>: Provide energy. Focus on complex carbs with fiber to stabilize blood sugar and reduce hunger.</li>
+        </ul>
+
+        <hr>
+        <h2>🔍🔬 Top Science-Backed Summaries</h2>
+             <div class="recipe">
+        <h2>1. Resistance Training Before Cardio Boosts Fat Burn</h2>
+          <div class="image-wrapper">
+          <img src="https://www.superfituk.co.uk/wp-content/uploads/shutterstock_635024150-scaled.jpg" alt="Resistance and Cardio">
+          </div>
+          <p><strong>Summary:</strong> A Chinese study revealed that performing resistance training before cardio significantly enhances fat loss, especially visceral fat. This method depletes glycogen stores, prompting the body to utilize fat as fuel during cardio. Additionally, fasted workouts and moderate caffeine intake (3 mg/kg) can further increase fat oxidation by 11–29%.</p>
+          <ul>
+            <li>💪 Lifting first increases post-exercise fat burn.</li>
+            <li>🔥 Enhanced results with caffeine or fasted state.</li>
+            <li>🧬 Works regardless of training background.</li>
+          </ul>
+        <hr/>
+        <p><strong>Source:</strong> <a href="https://www.thetimes.co.uk/article/how-to-burn-more-fat-when-you-exercise-0n9nvlhbc?utm_source=chatgpt.com" target="_blank">The Times - How to Burn More Fat</a></p>
+      </div>
+      <div class="recipe">
+      <h2>2. Slow & Steady Strength Training Improves Metabolism</h2>
+      <div class="image-wrapper">
+        <img src="https://img.lb.wbmdstatic.com/vim/live/webmd/consumer_assets/site_images/articles/health_tools/10_signs_your_uc_is_in_remission_slideshow/1800ss_getty_rf_mature_man_doing_squats.jpg?resize=750px:*&output-quality=75" alt="Slow Strength Training">
+      </div>
+      <p><strong>Summary:</strong> Research shows that slow, controlled strength training—5 seconds lifting and 5 seconds lowering—enhances resting metabolic rate more effectively than fast reps. Just two sessions per week are enough to see a difference, particularly in women.</p>
+      <ul>
+        <li>🐢 Slow reps lead to a longer fat-burning effect post-workout.</li>
+        <li>💪 Just 2 workouts per week can boost metabolism significantly.</li>
+        <li>🌸 Especially beneficial for women’s fat loss and strength.</li>
+      </ul>
+      <hr />
+      <p><strong>Source:</strong> <a href="https://www.thetimes.co.uk/article/how-to-burn-more-fat-when-you-exercise-0n9nvlhbc" target="_blank">The Times – How to Burn More Fat</a></p>
+      </div>
+      <div class="recipe">
+      <h2>3. Fat-Burning Foods & Metabolism-Boosting Spices</h2>
+      <div class="image-wrapper">
+        <img src="https://hips.hearstapps.com/hmg-prod/images/healthy-food-clean-eating-selection-royalty-free-image-854725402-1541694348.jpg?crop=1xw:0.84415xh;0,0&resize=1200:*" alt="Fat Burning Spices">
+      </div>
+      <p><strong>Summary:</strong> Some foods and spices have a thermogenic effect, slightly increasing your energy expenditure. Ingredients like chili, green tea, and turmeric have been shown to enhance fat oxidation and appetite control, especially when combined with a calorie-controlled diet.</p>
+      <ul>
+        <li>🌶️ Capsaicin (in chili) raises calorie burn after meals.</li>
+        <li>🍵 Green tea supports fat oxidation and energy use.</li>
+        <li>🟡 Turmeric reduces inflammation and improves metabolic health.</li>
+      </ul>
+      <hr />
+      <p><strong>Source:</strong> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7019938/" target="_blank">NIH - Metabolism and Thermogenesis</a></p>
+      </div>
+      <div class="recipe">
+      <h2>4. “30–30–30 Rule” for Morning Metabolism</h2>
+      <div class="image-wrapper">
+        <img src="https://i0.wp.com/fitelo.co/wp-content/uploads/30-30-30-Rule-Weight-Loss.webp?resize=1024%2C527&ssl=1" alt="Morning Routine">
+      </div>
+      <p><strong>Summary:</strong> The "30–30–30 Rule" recommends: 30g protein within 30 minutes of waking, followed by 30 minutes of light exercise. This jump-starts fat oxidation and curbs cravings, according to metabolic health coaches and anecdotal evidence from fitness communities.</p>
+      <ul>
+        <li>⏰ Eat 30g protein within 30 min of waking.</li>
+        <li>🚶‍♀️ Follow with 30 min of light cardio or walking.</li>
+        <li>📉 Reduces blood sugar spikes and hunger later in the day.</li>
+      </ul>
+      <hr />
+      <p><strong>Source:</strong> <a href="https://melissaneill.com/the-30-30-30-fat-loss-morning-habit/" target="_blank">Melissa Neill - 30–30–30 Rule</a></p>
+    </div>
+    <div class="recipe">
+      <h2>5. Intermittent Fasting vs Daily Calorie Cuts</h2>
+      <div class="image-wrapper">
+        <img src="https://blog.mymetabolicmeals.com/wp-content/uploads/2020/10/Fasting-Calorie-Restriction-Time-Restricted-Infographic.jpg" alt="Fasting Clock">
+      </div>
+      <p><strong>Summary:</strong> A landmark 2022 study published in the New England Journal of Medicine found that intermittent fasting (time-restricted eating) led to similar fat loss outcomes as daily calorie reduction. However, fasting may support improved insulin sensitivity and appetite control for some people.</p>
+      <ul>
+        <li>⏳ 16:8 or 18:6 fasting windows are commonly used.</li>
+        <li>⚖️ Fasting doesn't outperform calorie tracking for weight loss, but it helps with satiety.</li>
+        <li>🩸 May improve blood sugar and energy levels.</li>
+      </ul>
+      <hr />
+      <p><strong>Source:</strong> <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2114833" target="_blank">NEJM – Calorie Restriction vs Intermittent Fasting</a></p>
+    </div>
+      <div class="recipe">
+  <h2>💡 Evidence from Clinical Reviews & Meta-Analyses</h2>
+  <ul style="padding-left: 20px; line-height: 1.6;">
+    <li>
+      <strong>Aerobic Exercise Guidelines:</strong>
+      <span>150+ minutes of moderate cardio weekly yields meaningful fat reduction and waist-size declines in clinical trials.</span>
+      <br>
+      <a href="https://www.theguardian.com" target="_blank">theguardian.com</a>
+    </li>
+    <li>
+      <strong>Exercise + Diet Synergy:</strong>
+      <span>Interventions combining activity and dietary changes produce more weight loss (~3–4 kg) than either alone, even in short-term programs (&lt;13 weeks).</span>
+      <br>
+      <a href="https://www.cdc.gov" target="_blank">cdc.gov</a> + 
+      <a href="https://www.mdpi.com" target="_blank">mdpi.com</a>
+    </li>
+    <li>
+      <strong>Weight Regain Challenges:</strong>
+      <span>Over half of lost weight returns within 2 years due to set-point physiology. Resistance training, fiber-rich diets, and 300 min/week of exercise help maintain fat loss.</span>
+      <br>
+      <a href="https://www.thetimes.co.uk" target="_blank">thetimes.co.uk</a>
+    </li>
+  </ul>
+</div>
+
+        <h2>Foods to Eat</h2>
+        <p>Choose low-calorie, high-protein, and fiber-rich foods to support fat burning and satiety.</p>
+
+        <table>
+          <tr>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Carbs</th>
+          </tr>
+            <tr><td>Egg Whites (4)</td><td>68 kcal</td><td>14g</td><td>0.2g</td><td>0.7g</td></tr>
+            <tr><td>Moong Sprouts (100g)</td><td>30 kcal</td><td>3g</td><td>0.2g</td><td>6g</td></tr>
+            <tr><td>Oats (50g)</td><td>190 kcal</td><td>6.5g</td><td>3.5g</td><td>33g</td></tr>
+            <tr><td>Grilled Chicken (100g)</td><td>165 kcal</td><td>31g</td><td>3.6g</td><td>0g</td></tr>
+            <tr><td>Quinoa (100g cooked)</td><td>120 kcal</td><td>4g</td><td>2g</td><td>21g</td></tr>
+            <tr><td>Low-fat Paneer (100g)</td><td>150 kcal</td><td>18g</td><td>7g</td><td>1.2g</td></tr>
+            <tr><td>Apple</td><td>95 kcal</td><td>0.5g</td><td>0.3g</td><td>25g</td></tr>
+            <tr><td>Spinach (100g)</td><td>23 kcal</td><td>2.9g</td><td>0.4g</td><td>3.6g</td></tr>
+            <tr><td>Curd (low-fat, 100g)</td><td>60 kcal</td><td>3.5g</td><td>1.5g</td><td>4.7g</td></tr>
+        </table>
+
+        <hr>
+
+        <h2>Foods to Avoid</h2>
+       <ul>
+          <li><strong>Refined sugar</strong> – Promotes fat storage and blood sugar spikes.</li>
+          <li><strong>White bread/pasta</strong> – Low in fiber, high in empty carbs.</li>
+          <li><strong>Fried snacks</strong> – Add unnecessary fat calories.</li>
+          <li><strong>Soft drinks/juices</strong> – Contain high sugar and zero satiety.</li>
+        </ul>
+        <p>➡️ <strong>Advantage</strong>: Helps stabilize insulin levels, improve energy, and support a leaner physique.</p>
+        <hr>
+        <h2>Sample Menu (1 Day)</h2>
+        <ul>
+          <li><strong>Morning (Detox):</strong> Warm water + lemon + chia seeds</li>
+          <li><strong>Breakfast:</strong> Oats porridge + egg whites + green tea</li>
+          <li><strong>Snack:</strong> Apple + 5 soaked almonds</li>
+          <li><strong>Lunch:</strong> Quinoa + moong dal + spinach sabzi + curd</li>
+          <li><strong>Evening Snack:</strong> Roasted chana + black coffee</li>
+          <li><strong>Dinner:</strong> Grilled tofu/chicken + salad + vegetable soup</li>
+          <li><strong>Bedtime:</strong> Chamomile tea</li>
+        </ul>
+
+        <hr>
+
+        <h3>Healthy Fat Loss Snacks</h3>
+        <ul>
+          <li>Cucumber + hummus</li>
+          <li>Moong sprouts chaat</li>
+          <li>Roasted peanuts or chana</li>
+          <li>Greek yogurt with flax seeds</li>
+          <li>Boiled eggs</li>
+        </ul>
+        <hr>
+
+        <h2>Muscle Gain Tips</h2>
+        <ul>
+          <li>Hydrate: 3–4L water daily</li>
+          <li>Include fiber: 25–30g/day</li>
+          <li>Eat slowly & avoid distractions</li>
+          <li>Get 7–8 hours of quality sleep</li>
+          <li>Exercise: Mix of cardio + strength</li>
+        </ul>
+        <hr>
+
+        <h2>Shopping List</h2>
+        <ul>
+          <li>Whole grains: Oats, quinoa, brown rice</li>
+          <li>Proteins: Egg whites, chicken breast, tofu</li>
+          <li>Veggies: Spinach, cucumber, carrot, broccoli</li>
+          <li>Fruits: Apple, papaya, berries</li>
+          <li>Fats: Flaxseeds, almonds, olive oil</li>
+          <li>Dairy: Low-fat curd, milk, paneer</li>
+        </ul>
+
+        <hr>
+
+        <h2>Bottom Line</h2>
+        <p>To gain muscle, follow a calorie-surplus diet rich in protein, complex carbs, and healthy fats. Pair it with strength training and sufficient rest to achieve lean muscle growth.</p>
+      </div>
+
+    </div>
+      <section class="plans-wrapper">
+    <h2 class="section-title">The right plan for your health</h2>
+    <p class="section-subtitle">Choose the perfect plan for your fitness needs. Flexible and easy to follow.</p>
+
+    <div class="plans-container">
+      <!-- BASIC PLAN -->
+      <div class="plan-card basic">
+        <h3>BASIC (3 MONTHS)</h3>
+        <p class="price">Rs. 6,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support (Once in 15 Days)</li>
+          <li class="included">✔️ WhatsApp Support (Limited)</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="not-included">❌ Workout Posture Correction</li>
+          <li class="not-included">❌ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=basic" class="enroll-button">ENROLL NOW</a>
+      </div>
+
+      <!-- PREMIUM PLAN -->
+      <div class="plan-card premium">
+        <div class="tag">Most Popular</div>
+        <h3>PREMIUM (3 MONTHS)</h3>
+        <p class="price">Rs. 9,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support</li>
+          <li class="included">✔️ WhatsApp Support</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="included">✔️ Workout Posture Correction</li>
+          <li class="included">✔️ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=premium" class="enroll-button">ENROLL NOW</a>
+      </div>
+    </div>
+  </section>
+    </div>
+  </div>
+{% endblock %}

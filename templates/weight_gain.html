@@ -1,0 +1,465 @@
+{% extends "base.html" %}
+{% block title %}Weight Loss{% endblock %}
+
+{% block content %}
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: block; /* Changed from flex to block */
+    }
+
+    .main {
+      width: 100%;       /* Full width now */
+      padding: 30px;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .recipe, .intro {
+      background: #ffffff;
+      padding: 25px;
+      margin-bottom: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .image-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+    .plan-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .plan {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .plan h3 {
+      color: #6a6cff;
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    .plan ul li {
+      padding: 6px 0;
+      font-size: 0.95em;
+    }
+
+    .enroll {
+      background-color: #6a6cff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .premium {
+      border: 2px solid #6a6cff;
+    }
+
+    .tag {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 0.75em;
+      font-weight: bold;
+      border-radius: 0 12px 0 12px;
+    }
+      .plans-wrapper {
+        padding: 60px 30px;
+        background: #f8fbfd;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .plans-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .plan-card {
+        background-color: #ffffff;
+        border-radius: 18px;
+        padding: 30px 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        width: 320px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        text-align: center;
+      }
+
+      .plan-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .plan-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #1f2e49;
+      }
+
+      .plan-card .price {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+      }
+
+      .plan-card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .plan-card ul li {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        padding-left: 1.4em;
+        position: relative;
+      }
+
+      .plan-card ul li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .plan-card ul li.included::before {
+        color: #3b82f6;
+      }
+
+      .plan-card ul li.not-included::before {
+        color: #e53935;
+      }
+
+      .enroll-button {
+        display: inline-block;
+        background-color: #1f2e49;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+      }
+
+      .enroll-button:hover {
+        background-color: #3b82f6;
+      }
+
+      .plan-card .tag {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ff9800;
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+  </style>
+
+  <div class="container">
+    <div class="main">
+      <div class="intro">
+ <h1>🍛 Tips and studies for Weight Gain</h1>
+        <hr>
+        <h3>What It Is</h3>
+        <p>A weight gain diet aims to increase body mass by consuming a calorie surplus—more calories than you burn. The focus is on healthy calorie-dense foods rich in carbs, fats, and proteins to ensure gains are mostly muscle and not fat.</p>
+
+        <h3>Macronutrients and Their Role in Weight Gain</h3>
+        <ul>
+          <li><strong>Calories:</strong> A surplus of 300–500 kcal/day promotes healthy weight gain.</li>
+          <li><strong>Proteins:</strong> Help in building muscle mass. Aim for 1.6–2.2g per kg body weight.</li>
+          <li><strong>Fats:</strong> Essential for increasing caloric intake and hormone health.</li>
+          <li><strong>Carbohydrates:</strong> Fuel workouts and replenish glycogen. Choose calorie-rich complex carbs.</li>
+        </ul>
+
+        <hr>
+        <h2>🔍🔬 Top Science-Backed Summaries</h2>
+        <div class="recipe">
+        
+        <h2>1. Caloric Surplus with Nutrient-Dense Foods</h2>
+        <div class="image-wrapper">
+          <img src="https://personaltrainingmalta.com/wp-content/uploads/2024/03/Importance-of-nutrient-dense-1024x683.jpg" alt="Healthy Food">
+        </div>
+        <p><strong>Summary:</strong> Consistently eating 300–500 more calories than your daily requirement using whole, unprocessed foods helps in gaining weight in a healthy manner without excessive fat accumulation.</p>
+        <ul>
+          <li>🍠 Focus on calorie-dense foods like avocados, nuts, whole grains, and oils.</li>
+          <li>🥗 Eat balanced meals with protein, carbs, and fats.</li>
+          <li>📆 Track intake to ensure a steady surplus over weeks.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.healthline.com/nutrition/how-to-gain-weight" target="_blank">healthline.com</a>,
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3662288/" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>2. Resistance Training for Lean Muscle Gain</h2>
+        <div class="image-wrapper">
+          <img src="https://www.isatori.com/cdn/shop/articles/iStock-1370782467_800x.jpg?v=1676863216" alt="Weightlifting">
+        </div>
+        <p><strong>Summary:</strong> Lifting weights stimulates muscle protein synthesis, leading to muscle hypertrophy. Combining this with a caloric surplus helps convert nutrients into muscle, not fat.</p>
+        <ul>
+          <li>🏋️ Train 3–5x per week with compound exercises (squats, presses).</li>
+          <li>🍗 Prioritize post-workout protein (20–40g per session).</li>
+          <li>⏱ Progressive overload is key to continuous gains.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6950543/" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>3. Protein Intake Timing and Distribution</h2>
+        <div class="image-wrapper">
+          <img src="https://www.strongerbyscience.com/wp-content/uploads/2017/07/image8.jpeg" alt="High Protein Meal">
+        </div>
+        <p><strong>Summary:</strong> To build muscle, protein must be evenly distributed across meals. Studies show 0.4g protein/kg body weight per meal optimizes muscle growth more than skewed intake.</p>
+        <ul>
+          <li>🥩 Aim for 20–40g protein per meal.</li>
+          <li>🕒 Eat protein every 3–5 hours, including bedtime casein.</li>
+          <li>🍳 Include eggs, meat, dairy, legumes, and whey protein.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0184-9" target="_blank">JISSN</a>,
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5477156/" target="_blank">ncbi.nlm.nih.gov</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>5. Frequent Eating & Snacking Promotes Consistent Gain</h2>
+        <div class="image-wrapper">
+          <img src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/12/eating-home-salad-1296x728-header.jpg?w=1155&h=1528" alt="Healthy Snacks">
+        </div>
+        <p><strong>Summary:</strong> Eating every 3–4 hours can prevent catabolism and ensure continuous nutrient availability. Studies suggest that 4–6 meals per day lead to greater lean mass accrual than 2–3 large meals.</p>
+        <ul>
+          <li>🥪 Add mini-meals between breakfast, lunch, and dinner.</li>
+          <li>🍌 Include smoothies, trail mix, nut butters, protein bars.</li>
+          <li>⏰ Schedule snacks in your calendar to maintain habit.</li>
+        </ul>
+        <hr />
+        <p><strong>Sources:</strong>
+          <a href="https://www.mdpi.com/2072-6643/12/6/1690" target="_blank">mdpi.com</a>
+        </p>
+      </div>
+      <div class="recipe">
+        <h2>🍽️ More Evidence from Clinical Reviews & Meta-Analyses</h2>
+
+        <p><strong>Gut Health Influences Weight Gain:</strong> Research shows that individuals with a diverse, fiber-rich microbiome absorb nutrients more effectively and have improved appetite regulation. Prebiotics and probiotics (like yogurt, kefir, and fermented foods) can assist in sustainable weight gain.</p>
+        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5093364/" target="_blank">ncbi.nlm.nih.gov</a></p>
+        <hr />
+
+        <p><strong>Sleep Duration Affects Metabolism and Appetite:</strong> Clinical studies confirm that people sleeping less than 6 hours per night have higher cortisol levels and disrupted hunger hormones (ghrelin/leptin), making it harder to gain healthy weight. 7–9 hours of sleep improves hormonal balance and recovery.</p>
+        <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC535701/" target="_blank">ncbi.nlm.nih.gov</a></p>
+        <hr />
+
+        <p><strong>Liquid Calories Improve Intake Without Fullness:</strong> Smoothies, shakes, and milk-based drinks allow for increased caloric intake without suppressing appetite. Research supports their use especially in individuals with low appetite or fast metabolisms.</p>
+        <p><a href="https://www.mdpi.com/2072-6643/12/2/512" target="_blank">mdpi.com</a></p>
+      </div>
+
+        <h2>Foods to Eat</h2>
+        <p>Focus on whole, protein-rich foods along with calorie-dense sources to support muscle gain.</p>
+
+        <table>
+          <tr>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Carbs</th>
+          </tr>
+          <tr><td>Peanut Butter (2 tbsp)</td><td>190 kcal</td><td>8g</td><td>16g</td><td>6g</td></tr>
+          <tr><td>Banana</td><td>105 kcal</td><td>1.3g</td><td>0.3g</td><td>27g</td></tr>
+          <tr><td>Whole Milk (1 glass)</td><td>150 kcal</td><td>8g</td><td>8g</td><td>12g</td></tr>
+          <tr><td>Paneer (100g)</td><td>265 kcal</td><td>18g</td><td>20g</td><td>1g</td></tr>
+          <tr><td>Rice (1 cup)</td><td>206 kcal</td><td>4g</td><td>0.4g</td><td>45g</td></tr>
+          <tr><td>Roti (Whole Wheat)</td><td>120 kcal</td><td>3g</td><td>3g</td><td>20g</td></tr>
+          <tr><td>Boiled Potatoes</td><td>87 kcal</td><td>2g</td><td>0.1g</td><td>20g</td></tr>
+          <tr><td>Ghee (1 tbsp)</td><td>120 kcal</td><td>0g</td><td>14g</td><td>0g</td></tr>
+          <tr><td>Almonds (10 pcs)</td><td>70 kcal</td><td>2.6g</td><td>6.1g</td><td>2.5g</td></tr>
+        </table>
+
+        <hr>
+
+	<h3>Foods to Avoid</h3>
+        <ul>
+          <li>Low-calorie foods with minimal nutritional value</li>
+          <li>Artificial sweeteners and diet sodas</li>
+          <li>Skipping meals</li>
+        </ul>
+
+
+        <hr>
+
+        <h2>Sample Menu (1 Day)</h2>
+        <ul>
+	  <li><strong>Breakfast:</strong> Banana smoothie with peanut butter, oats, and whole milk</li>
+          <li><strong>Snack:</strong> Boiled sweet potatoes with paneer cubes</li>
+          <li><strong>Lunch:</strong> Rice + Rajma + mixed vegetable sabzi + roti with ghee</li>
+          <li><strong>Evening Snack:</strong> Dry fruits + whole milk</li>
+          <li><strong>Dinner:</strong> Roti + palak paneer + salad + curd</li>
+          <li><strong>Bedtime:</strong> A glass of warm milk with almonds</li>
+        </ul>
+
+        <hr>
+
+        <h2>Healthy Snacks</h2>
+        <ul>
+          <li>Trail mix with dried fruits and seeds</li>
+          <li>Cheese cubes</li>
+          <li>Boiled eggs with ghee toast</li>
+          <li>Fruit milkshakes with peanut or almond butter</li>
+        </ul>
+        <hr>
+
+        <h2>Weight Gain Tips</h2>
+        <ul>
+          <li>Eat every 2–3 hours</li>
+          <li>Add healthy fats to all meals</li>
+          <li>Drink calories (smoothies, milk)</li>
+          <li>Lift weights to convert food into muscle mass</li>
+          <li>Get at least 7 hours of sleep</li>
+        </ul>
+
+        <hr>
+
+        <h2>Shopping List</h2>
+        <ul>
+          <li><strong>High-calorie dairy:</strong> Whole milk, cheese, paneer</li>
+          <li><strong>Healthy fats:</strong> Ghee, butter, peanut butter, nuts</li>
+          <li><strong>Carbs:</strong> Rice, potatoes, oats, whole wheat bread</li>
+          <li><strong>Proteins:</strong> Lentils, eggs, tofu, paneer</li>
+          <li><strong>Fruits & Veggies:</strong> Banana, mango, sweet potatoes</li>
+        </ul>
+
+        <hr>
+
+        <h2>Bottom Line</h2>
+        <p>To gain weight healthily, consume calorie-dense foods rich in protein and healthy fats. Consistency, strength training, and rest are essential for turning those calories into quality body mass.</p>
+
+      </div>
+
+    </div>
+      <section class="plans-wrapper">
+    <h2 class="section-title">The right plan for your health</h2>
+    <p class="section-subtitle">Choose the perfect plan for your fitness needs. Flexible and easy to follow.</p>
+
+    <div class="plans-container">
+      <!-- BASIC PLAN -->
+      <div class="plan-card basic">
+        <h3>BASIC (3 MONTHS)</h3>
+        <p class="price">Rs. 6,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support (Once in 15 Days)</li>
+          <li class="included">✔️ WhatsApp Support (Limited)</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="not-included">❌ Workout Posture Correction</li>
+          <li class="not-included">❌ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=basic" class="enroll-button">ENROLL NOW</a>
+      </div>
+
+      <!-- PREMIUM PLAN -->
+      <div class="plan-card premium">
+        <div class="tag">Most Popular</div>
+        <h3>PREMIUM (3 MONTHS)</h3>
+        <p class="price">Rs. 9,990</p>
+        <ul>
+          <li class="included">✔️ Customised Diet</li>
+          <li class="included">✔️ Customised Workout</li>
+          <li class="included">✔️ Weekly Check-Ins</li>
+          <li class="included">✔️ 1-1 Phone Call Support</li>
+          <li class="included">✔️ WhatsApp Support</li>
+          <li class="included">✔️ Supplement Guidance</li>
+          <li class="included">✔️ Workout Posture Correction</li>
+          <li class="included">✔️ Meal Tracking & Feedback</li>
+          <li class="not-included">❌ 1-1 Video Call With Coach</li>
+        </ul>
+        <a href="/enroll?plan=premium" class="enroll-button">ENROLL NOW</a>
+      </div>
+    </div>
+  </section>
+    </div>
+  </div>
+{% endblock %}
