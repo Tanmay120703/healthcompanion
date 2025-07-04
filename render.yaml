@@ -1,14 +1,15 @@
 services:
   - type: web
-    name: fastapi-backend
+    name: HealthCompanion
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
     plan: free
 
   - type: web
-    name: streamlit-ai-chat
+    name: Healthbot
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: streamlit run streamlit_app.py --server.port 8501
     plan: free
+git init
