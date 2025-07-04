@@ -4,3 +4,7 @@ jinja2
 langchain
 openai
 streamlit
+python-dotenv
+pydantic
+starlette
+itsdangerous
