@@ -7,9 +7,8 @@ services:
     plan: free
 
   - type: web
-    name: Healthbot
+    name: HealthBot
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: streamlit run streamlit_app.py --server.port 8501
     plan: free
-git init
